@@ -1,5 +1,6 @@
 <?php
-$conn = new mysqli('localhost', 'root', '', 'rr_business');
+// Connect to InfinityFree remote database
+$conn = new mysqli('sql110.infinityfree.com', 'if0_39236898', 'Rrbusiness2025', 'if0_39236898_rrbusiness');
 
 $data = [
     'total_products' => 0,
