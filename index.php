@@ -148,6 +148,72 @@ nav a:hover{color:#ffd772}
   color: #007BFF;
   text-decoration: underline;
 }
+      /* Mobile View Fixes */
+@media (max-width: 768px) {
+  /* Header Top Bar */
+  .top-bar {
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  #datetime {
+    margin-top: 5px;
+  }
+
+  /* Logo + Title + Search stacking */
+  .logo-title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .logo {
+    width: 50px;
+    margin-bottom: 8px;
+  }
+
+  .title-text h1 {
+    font-size: 20px;
+    margin: 5px 0;
+  }
+
+  .title-text p {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .search-bar {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-bar input {
+    width: 70%;
+    font-size: 14px;
+  }
+
+  .search-bar button {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  /* Navigation Menu */
+  .menu-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 8px;
+  }
+
+  .menu-bar a {
+    font-size: 14px;
+    margin: 5px 10px;
+  }
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9);}
