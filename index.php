@@ -63,12 +63,17 @@ nav a:hover{color:#ffd772}
 @media(max-width:768px){
   #navToggle{display:block;position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;padding:6px 8px;cursor:pointer}
   #navToggle span{display:block;width:26px;height:3px;background:#fff;margin:4px 0;transition:.3s}
-  .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--brand-dark);flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s}
+  .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--brand-dark);flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s;.nav-links {
+  transition: max-height 0.3s ease;}}
   nav.open .nav-links{max-height:550px;padding:12px 0}
   nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   nav.open #navToggle span:nth-child(2){opacity:0}
   nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
   nav a{font-size:1.05rem;margin:6px 0}
+      nav .nav-links {
+  display: flex;
+  flex-direction: column;
+}
 }
 /* ===== BANNER ===== */
 .banner-slider{position:relative;width:100%;height:320px;overflow:hidden}
@@ -542,7 +547,22 @@ function updateClock(){document.getElementById('clock').textContent=new Date().t
 updateClock();setInterval(updateClock,1000);
 const imgs=['images/banner1.jpg','images/banner2.jpg','images/banner3.jpg'];
 let idx=0;setInterval(()=>{idx=(idx+1)%imgs.length;document.getElementById('bannerImage').src=imgs[idx];},4000);
-document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navbar').classList.toggle('open'));
+document.addEventListener("DOMContentLoaded", () => {
+  const navToggle = document.getElementById('navToggle');
+  const navbar = document.getElementById('navbar');
+  const navLinks = document.querySelector('.nav-links');
+
+  navToggle.addEventListener('click', () => {
+    navbar.classList.toggle('open');
+
+    if (navbar.classList.contains('open')) {
+      navLinks.style.maxHeight = navLinks.scrollHeight + "px";
+    } else {
+      navLinks.style.maxHeight = "0";
+    }
+  });
+});
+
 </script>
 <?php if (isset($_GET['added'])): ?>
 <script>
