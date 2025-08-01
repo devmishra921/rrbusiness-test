@@ -273,7 +273,7 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
 <header>
   <img src="images/Logo.png" alt="Logo">
   <div class="header-center">
-    <div class="title">R.R. Business</div>
+    <div class="title">RR Business</div>
     <div class="tagline">100% Shuddh Desi Masale</div>
   </div>
 
