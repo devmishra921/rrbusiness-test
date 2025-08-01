@@ -55,7 +55,7 @@ header img {height: 75px;}
 
 /* NAVBAR */
 /* ===== NAVBAR ===== */
-nav{background:var(--brand-dark);padding:12px 14px;display:flex;align-items:center;justify-content:center;position:relative}
+
 nav a{color:#fff;text-decoration:none;font-weight:600;font-size:1.07rem;margin:0 20px;padding:8px 4px;transition:.25s}
 nav a:hover{color:#a83232}
 #navToggle{display:none}
@@ -65,16 +65,14 @@ nav a:hover{color:#a83232}
   #navToggle span{display:block;width:26px;height:3px;background: #000;margin:4px 0;transition:.3s}
   .nav-links{position:absolute;top:100%;left:0;width:100%;background:rgba(255, 255, 255, 0.8);;flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s;.nav-links {
   transition: max-height 0.3s ease;}}
-   nav.open .nav-links {
-    max-height: 200px;  /* half of banner height approx */
-  }
-     nav {
+   
+  nav {
   background: var(--brand-dark);
   padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;  /* ✅ No absolute */
+  position: relative;
   z-index: 5;
 }
     
