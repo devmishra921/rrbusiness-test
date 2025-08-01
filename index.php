@@ -343,33 +343,17 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
   <div class="nav-links">
     <a href="index.php">Home</a>
     <a href="products.php">Products</a>
-    <a href="about.php">About Us</a>
-    <a href="contact.php">Contact Us</a>
-    <a href="order.php">Order Now</a>
+    <a href="about.php">About Us</a>
+    <a href="contact.php">Contact Us</a>
+    <a href="order.php">Order Now</a>
     <a href="gallery.php">Gallery</a>
     <a href="recipes.php">Recipes</a>
   </div>
 </nav>
-
-<!-- ===== BANNER ===== -->
 <div class="banner-slider">
-      <nav id="navbar">
-  <button id="navToggle" aria-label="Toggle Navigation">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="nav-links">
-    <a href="index.php">Home</a>
-    <a href="products.php">Products</a>
-    <a href="about.php">About Us</a>
-    <a href="contact.php">Contact Us</a>
-    <a href="order.php">Order Now</a>
-    <a href="gallery.php">Gallery</a>
-    <a href="recipes.php">Recipes</a>
-  </div>
-</nav>
   <img src="images/banner1.jpg" id="bannerImage" alt="Banner">
   <div class="banner-overlay"></div>
-  <div class="banner-text">Taste the Purity with <span>R.R. Business Masale</span></div>
+  <div class="banner-text">Taste the Purity with <span>RR Business Masale</span></div>
 </div>
 
 <!-- ===== OUR PRODUCT CATEGORIES ===== -->
@@ -573,23 +557,16 @@ switchToLogin.onclick = () => {
   signupForm.style.display = "none";
   loginForm.style.display = "block";
 };
-
-</script>
-
-<!-- ===== JS (Clock, Banner, Burger) ===== -->
-<script>
-function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleString();}
-updateClock();setInterval(updateClock,1000);
-const imgs=['images/banner1.jpg','images/banner2.jpg','images/banner3.jpg'];
-let idx=0;setInterval(()=>{idx=(idx+1)%imgs.length;document.getElementById('bannerImage').src=imgs[idx];},4000);
+function updateClock() { document.getElementById('clock').textContent = new Date().toLocaleString(); }
+updateClock(); setInterval(updateClock, 1000);
+const imgs = ['images/banner1.jpg', 'images/banner2.jpg', 'images/banner3.jpg'];
+let idx = 0; setInterval(() => { idx = (idx + 1) % imgs.length; document.getElementById('bannerImage').src = imgs[idx]; }, 4000);
 document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.getElementById('navToggle');
   const navbar = document.getElementById('navbar');
   const navLinks = document.querySelector('.nav-links');
-
   navToggle.addEventListener('click', () => {
     navbar.classList.toggle('open');
-
     if (navbar.classList.contains('open')) {
       navLinks.style.maxHeight = navLinks.scrollHeight + "px";
     } else {
@@ -597,7 +574,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
 </script>
 <?php if (isset($_GET['added'])): ?>
 <script>
