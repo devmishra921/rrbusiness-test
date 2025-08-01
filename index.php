@@ -56,75 +56,85 @@ header img {height: 75px;}
 
 /* ===== NAVBAR ===== */
 nav a {
-  font-size: 1.05rem;
-  margin: 6px 0;
-  color: #000;
-  text-decoration: none;
+    font-size: 1.05rem;
+    margin: 6px 0;
+    color: #000;
 }
-
 nav a:hover {
-  color: #a83232;
+    color: #a83232;
 }
 
+/* Mobile Navigation Styles */
 #navToggle {
-  display: none;
+    display: none;
 }
 
-/* Mobile Responsive Navbar */
-@media (max-width: 768px) {
+@media(max-width: 768px) {
+  /* Toggle button (3 lines) */
   #navToggle {
     display: block;
     position: absolute;
     left: 10px;
-    top: 20px; /* Adjusted to be just below header */
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
-    padding: 6px 8px;
-    cursor: pointer;
+    padding: 6px;
     z-index: 1001;
   }
 
   #navToggle span {
     display: block;
-    width: 26px;
+    width: 24px;
     height: 3px;
     background: #000;
     margin: 4px 0;
     transition: 0.3s;
   }
 
+  /* Mobile Menu */
   .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9); /* transparent */
+    backdrop-filter: blur(2px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    top: 60px;  /* Below the toggle button */
-    left: 0;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(2px);
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.35s ease;
-    z-index: 1000;
+    transition: max-height 0.3s ease;
+    z-index: 999;
   }
 
-  nav.open .nav-links {
-    max-height: 320px; /* Adjust this if needed */
+  .mobile-nav-container.open .nav-links {
+    max-height: 350px;
   }
 
-  nav.open #navToggle span:nth-child(1) {
+  /* Toggle close animation */
+  .mobile-nav-container.open #navToggle span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
-
-  nav.open #navToggle span:nth-child(2) {
+  .mobile-nav-container.open #navToggle span:nth-child(2) {
     opacity: 0;
   }
-
-  nav.open #navToggle span:nth-child(3) {
+  .mobile-nav-container.open #navToggle span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
+
+  .nav-links a {
+    font-size: 1.05rem;
+    margin: 8px 0;
+    color: #000;
+  }
+
+  .nav-links a:hover {
+    color: #a83232;
+  }
 }
+
 /* ===== BANNER ===== */
 .banner-slider{position:relative;width:100%;height:320px;overflow:hidden;z-index:1;}
 .banner-slider img{width:100%;height:100%;object-fit:cover;transition:transform 8s}
@@ -365,11 +375,11 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
   </div>
 </header>
 
-<nav id="navbar">
+<div class="mobile-nav-container">
   <button id="navToggle" aria-label="Toggle Navigation">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="index.php">Home</a>
     <a href="products.php">Products</a>
     <a href="about.php">About Us</a>
@@ -378,7 +388,7 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
     <a href="gallery.php">Gallery</a>
     <a href="recipes.php">Recipes</a>
   </div>
-</nav>
+</div>
 <div class="banner-slider">
   <img src="images/banner1.jpg" id="bannerImage" alt="Banner">
   <div class="banner-overlay"></div>
@@ -611,8 +621,16 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
 
     navToggle.addEventListener('click', () => {
       navbar.classList.toggle('open');
-    });
+   
+      document.addEventListener("DOMContentLoaded", () => {
+  const navToggle = document.getElementById('navToggle');
+  const navContainer = document.querySelector('.mobile-nav-container');
+
+  navToggle.addEventListener('click', () => {
+    navContainer.classList.toggle('open');
   });
+});
+
 </script>
 
 <?php if (isset($_GET['added'])): ?>
