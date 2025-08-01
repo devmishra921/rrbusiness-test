@@ -56,28 +56,55 @@ header img {height: 75px;}
 /* NAVBAR */
 /* ===== NAVBAR ===== */
 
-nav a{color:#fff;text-decoration:none;font-weight:600;font-size:1.07rem;margin:0 20px;padding:8px 4px;transition:.25s}
+nav a {
+    font-size: 1.05rem;
+    margin: 6px 0;
+    color: #000;
+  }
 nav a:hover{color:#a83232}
 #navToggle{display:none}
 /* burger for ≤768px */
 @media(max-width:768px){
-  #navToggle{display:block;position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;padding:6px 8px;cursor:pointer}
+   #navToggle {
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 6px 8px;
+    cursor: pointer;
+    z-index: 1000;
+  }
   #navToggle span{display:block;width:26px;height:3px;background: #000;margin:4px 0;transition:.3s}
-  .nav-links{position:absolute;top:100%;left:0;width:100%;background:rgba(255, 255, 255, 0.8);;flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s;.nav-links {
-  transition: max-height 0.3s ease;}}
+   .nav-links {
+    position: absolute;
+    top: 100%; /* Start after nav */
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+    z-index: 999;
+  }
    
-  nav {
-  background: var(--brand-dark);
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 5;
-}
- nav.open .nav-links {
-  max-height: 320px;  /* Only up to banner height */
-}   
+   nav .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.9);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+  }
+  nav.open .nav-links {
+    max-height: 320px; /* Banner height ke equal */
+  }   
   nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   nav.open #navToggle span:nth-child(2){opacity:0}
   nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
