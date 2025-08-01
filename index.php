@@ -68,15 +68,16 @@ nav a:hover{color:#a83232}
    nav.open .nav-links {
     max-height: 200px;  /* half of banner height approx */
   }
-      nav {
-    position: absolute;
-    padding: 10px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 3;
-    background: transparent;  /* navbar background transparent */
-  }
+     nav {
+  background: var(--brand-dark);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;  /* ✅ No absolute */
+  z-index: 5;
+}
+    
   nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   nav.open #navToggle span:nth-child(2){opacity:0}
   nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
@@ -90,7 +91,7 @@ nav a:hover{color:#a83232}
     left: 0;
     width: 100%;
     z-index: 999;  /* keep above banner */
-    max-height: 0;
+    max-height: 300px;
     overflow: hidden;
     transition: max-height 0.35s ease;
     padding: 10px 0;  /* optional spacing */
