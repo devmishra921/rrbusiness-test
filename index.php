@@ -63,7 +63,7 @@ nav a:hover{color:#a83232}
 @media(max-width:768px){
   #navToggle{display:block;position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;padding:6px 8px;cursor:pointer}
   #navToggle span{display:block;width:26px;height:3px;background: #000;margin:4px 0;transition:.3s}
-  .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--brand-dark);flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s;.nav-links {
+  .nav-links{position:absolute;top:100%;left:0;width:100%;background:rgba(255, 255, 255, 0.8);;flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s;.nav-links {
   transition: max-height 0.3s ease;}}
    nav.open .nav-links {
     max-height: 200px;  /* half of banner height approx */
@@ -74,7 +74,7 @@ nav a:hover{color:#a83232}
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 998;
+    z-index: 3;
     background: transparent;  /* navbar background transparent */
   }
   nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -353,6 +353,20 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
 
 <!-- ===== BANNER ===== -->
 <div class="banner-slider">
+      <nav id="navbar">
+  <button id="navToggle" aria-label="Toggle Navigation">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="index.php">Home</a>
+    <a href="products.php">Products</a>
+    <a href="about.php">About Us</a>
+    <a href="contact.php">Contact Us</a>
+    <a href="order.php">Order Now</a>
+    <a href="gallery.php">Gallery</a>
+    <a href="recipes.php">Recipes</a>
+  </div>
+</nav>
   <img src="images/banner1.jpg" id="bannerImage" alt="Banner">
   <div class="banner-overlay"></div>
   <div class="banner-text">Taste the Purity with <span>R.R. Business Masale</span></div>
