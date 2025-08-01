@@ -57,26 +57,47 @@ header img {height: 75px;}
 /* ===== NAVBAR ===== */
 nav{background:var(--brand-dark);padding:12px 14px;display:flex;align-items:center;justify-content:center;position:relative}
 nav a{color:#fff;text-decoration:none;font-weight:600;font-size:1.07rem;margin:0 20px;padding:8px 4px;transition:.25s}
-nav a:hover{color:#ffd772}
+nav a:hover{color:#a83232}
 #navToggle{display:none}
 /* burger for ≤768px */
 @media(max-width:768px){
   #navToggle{display:block;position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;padding:6px 8px;cursor:pointer}
-  #navToggle span{display:block;width:26px;height:3px;background:#fff;margin:4px 0;transition:.3s}
+  #navToggle span{display:block;width:26px;height:3px;background: #000;margin:4px 0;transition:.3s}
   .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--brand-dark);flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s;.nav-links {
   transition: max-height 0.3s ease;}}
-  nav.open .nav-links{max-height:550px;padding:12px 0}
+   nav.open .nav-links {
+    max-height: 200px;  /* half of banner height approx */
+  }
+      nav {
+    position: absolute;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 998;
+    background: transparent;  /* navbar background transparent */
+  }
   nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   nav.open #navToggle span:nth-child(2){opacity:0}
   nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  nav a{font-size:1.05rem;margin:6px 0}
-      nav .nav-links {
-  display: flex;
-  flex-direction: column;
-}
+  nav a{font-size:1.05rem;margin:6px 0; color: #000;}
+  nav .nav-links {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.8);  /* light transparent background */
+    position: absolute;
+    top: 60px;  /* adjust if needed */
+    left: 0;
+    width: 100%;
+    z-index: 999;  /* keep above banner */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding: 10px 0;  /* optional spacing */
+  }
 }
 /* ===== BANNER ===== */
-.banner-slider{position:relative;width:100%;height:320px;overflow:hidden}
+.banner-slider{position:relative;width:100%;height:320px;overflow:hidden;z-index:1;}
 .banner-slider img{width:100%;height:100%;object-fit:cover;transition:transform 8s}
 .banner-slider:hover img{transform:scale(1.05)}
 .banner-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.4),rgba(0,0,0,.7));z-index:1}
