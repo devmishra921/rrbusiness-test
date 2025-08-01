@@ -75,25 +75,27 @@ nav a:hover{color:#a83232}
   position: relative;
   z-index: 5;
 }
-    
+ nav.open .nav-links {
+  max-height: 350px;  /* Only up to banner height */
+}   
   nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   nav.open #navToggle span:nth-child(2){opacity:0}
   nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
   nav a{font-size:1.05rem;margin:6px 0; color: #000;}
   nav .nav-links {
-    display: flex;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.8);  /* light transparent background */
-    position: absolute;
-    top: 60px;  /* adjust if needed */
-    left: 0;
-    width: 100%;
-    z-index: 999;  /* keep above banner */
-    max-height: 300px;
-    overflow: hidden;
-    transition: max-height 0.35s ease;
-    padding: 10px 0;  /* optional spacing */
-  }
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.9);  /* light transparent white */
+  backdrop-filter: blur(3px);  /* Optional blur for pro feel */
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  padding: 10px 0;
+}
 }
 /* ===== BANNER ===== */
 .banner-slider{position:relative;width:100%;height:320px;overflow:hidden;z-index:1;}
