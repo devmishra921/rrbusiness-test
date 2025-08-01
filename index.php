@@ -53,73 +53,77 @@ header img {height: 75px;}
   .search-bar{margin-top:10px}
 }
 
-/* NAVBAR */
-/* ===== NAVBAR ===== */
 
+/* ===== NAVBAR ===== */
 nav a {
-    font-size: 1.05rem;
-    margin: 6px 0;
-    color: #000;
-  }
-nav a:hover{color:#a83232}
-#navToggle{display:none}
-/* burger for ≤768px */
-@media(max-width:768px){
-   #navToggle {
+  font-size: 1.05rem;
+  margin: 6px 0;
+  color: #000;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #a83232;
+}
+
+#navToggle {
+  display: none;
+}
+
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+  #navToggle {
     display: block;
     position: absolute;
     left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 20px; /* Adjusted to be just below header */
     background: none;
     border: none;
     padding: 6px 8px;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 1001;
   }
-  #navToggle span{display:block;width:26px;height:3px;background: #000;margin:4px 0;transition:.3s}
-   .nav-links {
+
+  #navToggle span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #000;
+    margin: 4px 0;
+    transition: 0.3s;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: absolute;
-    top: 100%; /* Start after nav */
+    top: 60px;  /* Below the toggle button */
     left: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
-    flex-direction: column;
-    align-items: center;
+    backdrop-filter: blur(2px);
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.35s ease;
-    z-index: 999;
+    z-index: 1000;
   }
-   
-   nav .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: rgba(255,255,255,0.9);
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.35s ease;
-  }
+
   nav.open .nav-links {
-    max-height: 320px; /* Banner height ke equal */
-  }   
-  nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  nav.open #navToggle span:nth-child(2){opacity:0}
-  nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  nav a{font-size:1.05rem;margin:6px 0; color: #000;}
-nav .nav-links {
-  position: absolute;
-  top: 100%;           /* Navbar ke neeche turant start ho */
-  left: 0;
-  width: 100%;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(2px);
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
-}
+    max-height: 320px; /* Adjust this if needed */
+  }
+
+  nav.open #navToggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  nav.open #navToggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  nav.open #navToggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
 }
 /* ===== BANNER ===== */
 .banner-slider{position:relative;width:100%;height:320px;overflow:hidden;z-index:1;}
@@ -549,57 +553,68 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
 </footer>
 <!-- ===== Login/SignUp ===== -->
 <script>
-const modal = document.getElementById("popupForm");
-const openPopup = document.getElementById("openPopup");
-const closeBtn = document.getElementsByClassName("close")[0];
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
-const switchToSignup = document.getElementById("switchToSignup");
-const switchToLogin = document.getElementById("switchToLogin");
+  // Popup Modal Functionality
+  const modal = document.getElementById("popupForm");
+  const openPopup = document.getElementById("openPopup");
+  const closeBtn = document.getElementsByClassName("close")[0];
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+  const switchToSignup = document.getElementById("switchToSignup");
+  const switchToLogin = document.getElementById("switchToLogin");
 
-openPopup.onclick = () => {
-  modal.style.display = "block";
-  loginForm.style.display = "block";
-  signupForm.style.display = "none";
-};
+  openPopup.onclick = () => {
+    modal.style.display = "block";
+    loginForm.style.display = "block";
+    signupForm.style.display = "none";
+  };
 
-closeBtn.onclick = () => {
-  modal.style.display = "none";
-};
-
-window.onclick = (event) => {
-  if (event.target === modal) {
+  closeBtn.onclick = () => {
     modal.style.display = "none";
-  }
-};
+  };
 
-switchToSignup.onclick = () => {
-  loginForm.style.display = "none";
-  signupForm.style.display = "block";
-};
-
-switchToLogin.onclick = () => {
-  signupForm.style.display = "none";
-  loginForm.style.display = "block";
-};
-function updateClock() { document.getElementById('clock').textContent = new Date().toLocaleString(); }
-updateClock(); setInterval(updateClock, 1000);
-const imgs = ['images/banner1.jpg', 'images/banner2.jpg', 'images/banner3.jpg'];
-let idx = 0; setInterval(() => { idx = (idx + 1) % imgs.length; document.getElementById('bannerImage').src = imgs[idx]; }, 4000);
-document.addEventListener("DOMContentLoaded", () => {
-  const navToggle = document.getElementById('navToggle');
-  const navbar = document.getElementById('navbar');
-  const navLinks = document.querySelector('.nav-links');
-  navToggle.addEventListener('click', () => {
-    navbar.classList.toggle('open');
-    if (navbar.classList.contains('open')) {
-      navLinks.style.maxHeight = navLinks.scrollHeight + "px";
-    } else {
-      navLinks.style.maxHeight = "0";
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
     }
+  };
+
+  switchToSignup.onclick = () => {
+    loginForm.style.display = "none";
+    signupForm.style.display = "block";
+  };
+
+  switchToLogin.onclick = () => {
+    signupForm.style.display = "none";
+    loginForm.style.display = "block";
+  };
+
+  // Clock
+  function updateClock() {
+    document.getElementById('clock').textContent = new Date().toLocaleString();
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Banner Slider
+  const imgs = ['images/banner1.jpg', 'images/banner2.jpg', 'images/banner3.jpg'];
+  let idx = 0;
+  setInterval(() => {
+    idx = (idx + 1) % imgs.length;
+    document.getElementById('bannerImage').src = imgs[idx];
+  }, 4000);
+
+  // Navbar Toggle for Mobile
+  document.addEventListener("DOMContentLoaded", () => {
+    const navToggle = document.getElementById('navToggle');
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelector('.nav-links');
+
+    navToggle.addEventListener('click', () => {
+      navbar.classList.toggle('open');
+    });
   });
-});
 </script>
+
 <?php if (isset($_GET['added'])): ?>
 <script>
   alert('Item Cart में जोड़ा गया!');
