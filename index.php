@@ -85,7 +85,7 @@ header img {height: 75px;}
 }
 
 @media (max-width: 768px) {
-  /* Toggle button */
+  /* Toggle Button */
   #navToggle {
     display: block;
     position: absolute;
@@ -108,29 +108,41 @@ header img {height: 75px;}
     transition: 0.3s;
   }
 
-  /* Mobile Menu Container */
+  /* Mobile Menu Overlay */
   .nav-links {
-    position: absolute;
-    top: 100%;
+    position: fixed; /* ✅ CHANGED from absolute to fixed */
+    top: 0;
     left: 0;
     width: 100%;
+    height: 100%;  /* full screen overlay */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(2px);
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* center links vertically */
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.3s ease;
-    z-index: 999;
+    z-index: 1000; /* ✅ HIGHER than banner */
   }
 
-  /* When Open */
   .mobile-nav-container.open .nav-links {
-    max-height: 350px;
-    border-top: 1px solid #ccc;
+    max-height: 1000px;
   }
 
-  /* Animation for toggle (X icon) */
+  .nav-links a {
+    font-size: 1.3rem;
+    margin: 12px 0;
+    color: #000;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    color: #a83232;
+  }
+
+  /* Toggle 'X' animation */
   .mobile-nav-container.open #navToggle span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
@@ -141,19 +153,6 @@ header img {height: 75px;}
 
   .mobile-nav-container.open #navToggle span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
-  }
-
-  .nav-links a {
-    padding: 10px;
-    margin: 5px 0;
-    font-size: 1.1rem;
-    width: 100%;
-    text-align: center;
-  }
-
-  .nav-links a:hover {
-    background: var(--brand-light);
-    color: #fff;
   }
 }
 /* ===== BANNER ===== */
