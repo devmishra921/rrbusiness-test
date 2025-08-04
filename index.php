@@ -54,23 +54,38 @@ header img {height: 75px;}
 }
 
 
-/* ===== NAVBAR ===== */
-nav a {
-    font-size: 1.05rem;
-    margin: 6px 0;
-    color: #000;
-}
-nav a:hover {
-    color: #a83232;
+/* ===== NAVIGATION BAR STYLES ===== */
+
+/* Desktop View */
+.nav-links {
+  display: flex;
+  gap: 25px;
+  font-size: 1.05rem;
+  justify-content: center;
+  background: #fff8f0;
+  padding: 12px 0;
 }
 
-/* Mobile Navigation Styles */
+.nav-links a {
+  color: #000;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover {
+  background: var(--brand-dark);
+  color: #fff;
+}
+
+/* Mobile View */
 #navToggle {
-    display: none;
+  display: none;
 }
 
-@media(max-width: 768px) {
-  /* Toggle button (3 lines) */
+@media (max-width: 768px) {
+  /* Toggle button */
   #navToggle {
     display: block;
     position: absolute;
@@ -81,6 +96,7 @@ nav a:hover {
     border: none;
     padding: 6px;
     z-index: 1001;
+    cursor: pointer;
   }
 
   #navToggle span {
@@ -92,15 +108,14 @@ nav a:hover {
     transition: 0.3s;
   }
 
-  /* Mobile Menu */
+  /* Mobile Menu Container */
   .nav-links {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.9); /* transparent */
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(2px);
-    display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
@@ -109,32 +124,38 @@ nav a:hover {
     z-index: 999;
   }
 
+  /* When Open */
   .mobile-nav-container.open .nav-links {
     max-height: 350px;
+    border-top: 1px solid #ccc;
   }
 
-  /* Toggle close animation */
+  /* Animation for toggle (X icon) */
   .mobile-nav-container.open #navToggle span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
+
   .mobile-nav-container.open #navToggle span:nth-child(2) {
     opacity: 0;
   }
+
   .mobile-nav-container.open #navToggle span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
 
   .nav-links a {
-    font-size: 1.05rem;
-    margin: 8px 0;
-    color: #000;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1.1rem;
+    width: 100%;
+    text-align: center;
   }
 
   .nav-links a:hover {
-    color: #a83232;
+    background: var(--brand-light);
+    color: #fff;
   }
 }
-
 /* ===== BANNER ===== */
 .banner-slider{position:relative;width:100%;height:320px;overflow:hidden;z-index:1;}
 .banner-slider img{width:100%;height:100%;object-fit:cover;transition:transform 8s}
@@ -614,24 +635,14 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
   }, 4000);
 
   // Navbar Toggle for Mobile
-  document.addEventListener("DOMContentLoaded", () => {
-    const navToggle = document.getElementById('navToggle');
-    const navbar = document.getElementById('navbar');
-    const navLinks = document.querySelector('.nav-links');
-
-    navToggle.addEventListener('click', () => {
-      navbar.classList.toggle('open');
-   
-      document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.getElementById('navToggle');
   const navContainer = document.querySelector('.mobile-nav-container');
 
   navToggle.addEventListener('click', () => {
     navContainer.classList.toggle('open');
   });
-});
-
 </script>
+
 
 <?php if (isset($_GET['added'])): ?>
 <script>
