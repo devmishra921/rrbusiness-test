@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'db_connect.php';
+require 'function.php'; 
 
 // Load cart from session or set empty array
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
@@ -52,10 +53,99 @@ header img{height:75px}
 .search-bar input{flex:1;padding:10px;border:1px solid #ccc;border-radius:4px 0 0 4px;font-size:.95rem}
 .search-bar button{background:#a83232;border:none;padding:0 16px;color:#fff;border-radius:0 4px 4px 0;cursor:pointer}
 @media(max-width:768px){header{flex-direction:column;align-items:center}.header-center{position:static;transform:none;margin-top:10px}.header-right-wrap{align-items:center;margin-top:10px}.header-right{flex-direction:column;align-items:center;border:none;padding:0}.header-right div{border:none;padding:0;margin:4px 0}.search-bar{margin-top:10px}}
-nav{background:var(--brand-dark);padding:12px 14px;display:flex;align-items:center;justify-content:center;position:relative}
-nav a{color:#fff;text-decoration:none;font-weight:600;font-size:1.07rem;margin:0 20px;padding:8px 4px;transition:.25s}
-nav a:hover{color:#ffd772}#navToggle{display:none}
-@media(max-width:768px){#navToggle{display:block;position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;padding:6px 8px;cursor:pointer}#navToggle span{display:block;width:26px;height:3px;background:#fff;margin:4px 0;transition:.3s}.nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--brand-dark);flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s}nav.open .nav-links{max-height:550px;padding:12px 0}nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}nav.open #navToggle span:nth-child(2){opacity:0}nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}nav a{font-size:1.05rem;margin:6px 0}}
+/* ===== NAVBAR ===== */
+nav {
+  background: var(--brand-dark);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 16px;
+  padding: 10px 6px;
+  transition: .25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+nav a i {
+  font-size: 1rem;
+}
+nav a:hover { 
+  color: #ffd772; 
+  transform: translateY(-2px);
+}
+
+/* ===== TOGGLE (MOBILE ONLY) ===== */
+#navToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+#navToggle span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  transition: .3s;
+}
+
+/* ===== DESKTOP ===== */
+@media(min-width:769px){
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+}
+/* ===== MOBILE NAVBAR (FIX) ===== */
+@media(max-width:768px){
+  #navToggle {
+    display:flex;
+    background:none;
+    border:none;
+    cursor:pointer;
+    z-index:1001;
+    margin-right:10px;
+  }
+
+  /* Nav-links ko search bar ke neeche drop-down banaya */
+  .nav-links {
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    position:static;   /* ✅ FIXED: absolute ki jagah static */
+    width:100%;
+    background:var(--brand-dark);
+    overflow:hidden;
+    max-height:0;
+    padding:0;
+    transition:max-height .35s ease, padding .35s ease;
+  }
+
+  #navbar.open .nav-links {
+    max-height:500px;  /* enough space for all items */
+    padding:12px 0;
+  }
+
+  .nav-links a {
+    font-size:1rem;
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding:12px 18px;
+    margin:0;
+  }
+  .nav-links a:last-child {
+    border-bottom:none;
+  }
+}
 .order-container{max-width:960px;margin:40px auto;padding:40px;background:#fff;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
 .order-container h2{text-align:center;color:var(--brand-dark);margin-bottom:20px}
 form input,form select,form textarea{width:100%;padding:12px;margin:8px 0 16px;border:1px solid #ccc;border-radius:6px;font-size:1rem}
@@ -175,7 +265,7 @@ table { text-align:center; }
   <div>
     <i class="fa fa-cart-shopping"></i> 
     <a href="order.php" style="color:#a83232;text-decoration:underline;">
-      Cart (<?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?>)
+      Cart (<?php echo getCartQty($conn); ?>)
     </a>
   </div>
 
@@ -215,22 +305,21 @@ table { text-align:center; }
     </div>
   </div>
 </header>
-
-
 <nav id="navbar">
   <button id="navToggle" aria-label="Toggle Navigation">
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links">
-    <a href="index.php">Home</a>
-    <a href="products.php">Products</a>
-    <a href="about.php">About Us</a>
-    <a href="contact.php">Contact Us</a>
-    <a href="order.php">Order Now</a>
-    <a href="gallery.php">Gallery</a>
-    <a href="recipes.php">Recipes</a>
+    <a href="index.php"><i class="fa fa-home"></i> Home</a>
+    <a href="products.php"><i class="fa fa-box-open"></i> Products</a>
+    <a href="about.php"><i class="fa fa-info-circle"></i> About Us</a>
+    <a href="contact.php"><i class="fa fa-phone"></i> Contact Us</a>
+    <a href="order.php"><i class="fa fa-shopping-cart"></i> Order Now</a>
+    <a href="gallery.php"><i class="fa fa-image"></i> Gallery</a>
+    <a href="recipes.php"><i class="fa fa-utensils"></i> Recipes</a>
   </div>
 </nav>
+
 <!-- ✅ Track Order Form – One Line, Full Width -->
 <div style="display:flex; justify-content:center; padding:10px;">
   <form action="track_order.php" method="get" style="display:flex; width:100%; max-width:600px; gap:20px;">
@@ -244,42 +333,63 @@ table { text-align:center; }
 
 <div class="order-container">
   <h2>Review Your Order</h2>
+
+  <!-- ✅ Cart Table OUTSIDE of main form -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+    <thead>
+      <tr style="background:#a83232; color:white;">
+        <th style="padding:8px;">Product</th>
+        <th style="padding:8px;">Qty</th>
+        <th style="padding:8px;">Rate (₹)</th>
+        <th style="padding:8px;">Net Wt.</th>  
+        <th style="padding:8px;">Subtotal (₹)</th>
+        <th style="padding:8px;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php 
+      $grandTotal = 0;
+      foreach ($cart as $index => $item):
+          $name     = $item['name'] ?? '';
+          $qty      = $item['quantity'] ?? 0;
+          $price    = $item['price'] ?? 0;
+          $net_wt = $item['net_wt'] ?? '';
+          $subtotal = $price * $qty;
+          $grandTotal += $subtotal;
+      ?>
+        <tr>
+          <td style="padding:8px;"><?= htmlspecialchars($name) ?></td>
+          <td style="padding:8px;"><?= $qty ?></td>
+          <td style="padding:8px;">₹<?= number_format($price, 2) ?></td>
+          <td style="padding:8px;"><?= htmlspecialchars($net_wt) ?></td> 
+          <td style="padding:8px;">₹<?= number_format($subtotal, 2) ?></td>
+          <td style="padding:8px;">
+            <!-- ✅ Discard apne alag form me -->
+            <form method="post" action="remove_item.php" style="display:inline;" onsubmit="return confirmRemove();">
+              <input type="hidden" name="index" value="<?= $index ?>">
+              <button type="submit" style="background:#a83232;color:#fff;border:none;padding:6px 10px;border-radius:4px;cursor:pointer;">
+                Discard
+              </button>
+            </form>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+      <tr style="background:#f0f0f0;font-weight:bold;">
+        <td colspan="3" style="padding:8px;text-align:right;">Total:</td>
+        <td style="padding:8px;">₹<?= number_format($grandTotal, 2) ?></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ✅ Customer Details Form alag -->
   <form action="submit_order.php" method="post">
-    <?php foreach($cart as $name => $item): ?>
-      <input type="hidden" name="products[]" value="<?= htmlspecialchars($name) ?>">
+    <?php foreach($cart as $item): ?>
+      <input type="hidden" name="products[]" value="<?= htmlspecialchars($item['name']) ?>">
       <input type="hidden" name="qtys[]" value="<?= $item['quantity'] ?>">
       <input type="hidden" name="rates[]" value="<?= $item['price'] ?>">
     <?php endforeach; ?>
 
-    <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
-      <thead>
-        <tr style="background:#a83232; color:white;">
-          <th style="padding:8px;">Product</th>
-          <th style="padding:8px;">Qty</th>
-          <th style="padding:8px;">Rate (₹)</th>
-          <th style="padding:8px;">Subtotal (₹)</th>
-        </tr>
-      </thead>
-      <tbody>
-      <?php foreach($cart as $name => $item): 
-        $subtotal = $item['price'] * $item['quantity']; ?>
-        <tr>
-          <td style="padding:8px;"><?= htmlspecialchars($name) ?></td>
-          <td style="padding:8px;"><?= $item['quantity'] ?></td>
-          <td style="padding:8px;"><?= $item['price'] ?></td>
-          <td style="padding:8px;"><?= number_format($subtotal,2) ?></td>
-        </tr>
-      <?php endforeach; ?>
-      </tbody>
-      
-      <tfoot>
-  <tr>
-    <td colspan="4" style="text-align:right; padding:12px 25px; font-size:1.1rem;">
-      <strong>Total: ₹<?= number_format($cart_subtotal, 2) ?></strong>
-    </td>
-  </tr>
-</tfoot>
-    </table>
     <input type="text" name="customer_name" placeholder="Customer Name" required>
     <input type="email" name="email" placeholder="Email Address" required>
     <input type="text" name="phone" placeholder="Mobile No" required>
@@ -298,10 +408,12 @@ table { text-align:center; }
       <img src="images/upi-qr.png" alt="UPI QR Code">
       <p>or UPI ID: <strong>rrbusiness@upi</strong></p>
     </div>
-   <input type="text" id="txnInput" name="transaction_id" placeholder="Enter UPI Transaction ID" required>
+    
+    <input type="text" id="txnInput" name="transaction_id" placeholder="Enter UPI Transaction ID" required>
     <button type="button" id="payNow">Verify & Unlock Submit</button>
-    <div id="paymentStatus" style="display:none; color:green; font-weight:600; text-align:center; margin:10px 0">Payment Verified!</div>
-
+    <div id="paymentStatus" style="display:none; color:green; font-weight:600; text-align:center; margin:10px 0">
+      Payment Verified!
+    </div>
     <button type="submit" id="submitBtn" style="display:none;">Submit Order</button>
   </form>
 </div>
@@ -446,6 +558,12 @@ switchToLogin.onclick = () => {
 function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleString();}
 updateClock();setInterval(updateClock,1000);
 document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navbar').classList.toggle('open'));
+
+
+function confirmRemove() {
+  return confirm("Are you sure you want to remove this item from the cart?");
+}
+
 </script>
 </body>
 </html>
