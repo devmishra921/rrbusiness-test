@@ -1,8 +1,12 @@
-# Use official PHP + Apache image
 FROM php:8.1-apache
 
-# Copy your project files into the server
+# Install MySQL driver
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+# Copy project files
 COPY . /var/www/html/
 
-# Expose port 80 for web access
+# Apache document root set karna agar tumhara index.php kisi subfolder me ho
+# WORKDIR /var/www/html/public
+
 EXPOSE 80
