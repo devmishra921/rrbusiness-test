@@ -1,5 +1,7 @@
 <?php
-session_start();  // ✅ Yeh upar hona chahiye
+session_start();
+require 'db_connect.php';
+require 'function.php'; // 👈 ye line add karo
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,111 +54,102 @@ header img {height: 75px;}
   .header-right div{border:none;padding:0;margin:4px 0}
   .search-bar{margin-top:10px}
 }
-
-
-/* ===== NAVIGATION BAR STYLES ===== */
-
-/* Desktop View */
-.nav-links {
-  display: flex;
-  gap: 25px;
-  font-size: 1.05rem;
-  justify-content: center;
-  background: #fff8f0;
-  padding: 12px 0;
-}
-
-.nav-links a {
-  color: #000;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.nav-links a:hover {
+/* ===== NAVBAR ===== */
+nav {
   background: var(--brand-dark);
-  color: #fff;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-/* Mobile View */
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 16px;
+  padding: 10px 6px;
+  transition: .25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+nav a i {
+  font-size: 1rem;
+}
+nav a:hover { 
+  color: #ffd772; 
+  transform: translateY(-2px);
+}
+
+/* ===== TOGGLE (MOBILE ONLY) ===== */
 #navToggle {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+#navToggle span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  transition: .3s;
 }
 
-@media (max-width: 768px) {
-  /* Toggle Button */
-  #navToggle {
-    display: block;
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    padding: 6px;
-    z-index: 1001;
-    cursor: pointer;
-  }
-
-  #navToggle span {
-    display: block;
-    width: 24px;
-    height: 3px;
-    background: #000;
-    margin: 4px 0;
-    transition: 0.3s;
-  }
-
-  /* Mobile Menu Overlay */
+/* ===== DESKTOP ===== */
+@media(min-width:769px){
   .nav-links {
-    position: fixed; /* ✅ CHANGED from absolute to fixed */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;  /* full screen overlay */
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(2px);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* center links vertically */
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease;
-    z-index: 1000; /* ✅ HIGHER than banner */
+    gap: 20px;
+  }
+}
+/* ===== MOBILE NAVBAR (FIX) ===== */
+@media(max-width:768px){
+  #navToggle {
+    display:flex;
+    background:none;
+    border:none;
+    cursor:pointer;
+    z-index:1001;
+    margin-right:10px;
   }
 
-  .mobile-nav-container.open .nav-links {
-    max-height: 1000px;
+  /* Nav-links ko search bar ke neeche drop-down banaya */
+  .nav-links {
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    position:static;   /* ✅ FIXED: absolute ki jagah static */
+    width:100%;
+    background:var(--brand-dark);
+    overflow:hidden;
+    max-height:0;
+    padding:0;
+    transition:max-height .35s ease, padding .35s ease;
+  }
+
+  #navbar.open .nav-links {
+    max-height:500px;  /* enough space for all items */
+    padding:12px 0;
   }
 
   .nav-links a {
-    font-size: 1.3rem;
-    margin: 12px 0;
-    color: #000;
-    text-decoration: none;
+    font-size:1rem;
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding:12px 18px;
+    margin:0;
   }
-
-  .nav-links a:hover {
-    color: #a83232;
-  }
-
-  /* Toggle 'X' animation */
-  .mobile-nav-container.open #navToggle span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .mobile-nav-container.open #navToggle span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .mobile-nav-container.open #navToggle span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+  .nav-links a:last-child {
+    border-bottom:none;
   }
 }
+
 /* ===== BANNER ===== */
-.banner-slider{position:relative;width:100%;height:320px;overflow:hidden;z-index:1;}
+.banner-slider{position:relative;width:100%;height:320px;overflow:hidden}
 .banner-slider img{width:100%;height:100%;object-fit:cover;transition:transform 8s}
 .banner-slider:hover img{transform:scale(1.05)}
 .banner-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.4),rgba(0,0,0,.7));z-index:1}
@@ -233,72 +226,6 @@ header img {height: 75px;}
   color: #007BFF;
   text-decoration: underline;
 }
-      /* Mobile View Fixes */
-@media (max-width: 768px) {
-  /* Header Top Bar */
-  .top-bar {
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  #datetime {
-    margin-top: 5px;
-  }
-
-  /* Logo + Title + Search stacking */
-  .logo-title {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-  }
-
-  .logo {
-    width: 50px;
-    margin-bottom: 8px;
-  }
-
-  .title-text h1 {
-    font-size: 20px;
-    margin: 5px 0;
-  }
-
-  .title-text p {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-
-  .search-bar {
-    width: 90%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .search-bar input {
-    width: 70%;
-    font-size: 14px;
-  }
-
-  .search-bar button {
-    font-size: 14px;
-    padding: 5px 10px;
-  }
-
-  /* Navigation Menu */
-  .menu-bar {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 8px;
-  }
-
-  .menu-bar a {
-    font-size: 14px;
-    margin: 5px 10px;
-  }
-}
-
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9);}
@@ -338,7 +265,7 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
 
     <div class="header-right-wrap">
     <div class="header-right">
-  <div><strong style="color:#a83232">FREE SHIPPING IN INDIA</strong><br>orders ₹500 & more*</div>
+  <div><strong style="color:#a83232;">"Authentic Taste of India"</strong><br> (Minimum Order:- 25 KG)</div>
 
   <?php if(isset($_SESSION['user'])): ?>
     <div>
@@ -354,7 +281,7 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
   <div>
     <i class="fa fa-cart-shopping"></i> 
     <a href="order.php" style="color:#a83232;text-decoration:underline;">
-      Cart (<?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?>)
+      Cart (<?php echo getCartQty($conn); ?>)
     </a>
   </div>
 
@@ -395,24 +322,25 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
   </div>
 </header>
 
-<div class="mobile-nav-container">
+<nav id="navbar">
   <button id="navToggle" aria-label="Toggle Navigation">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links" id="navLinks">
-    <a href="index.php">Home</a>
-    <a href="products.php">Products</a>
-    <a href="about.php">About Us</a>
-    <a href="contact.php">Contact Us</a>
-    <a href="order.php">Order Now</a>
-    <a href="gallery.php">Gallery</a>
-    <a href="recipes.php">Recipes</a>
+  <div class="nav-links">
+    <a href="index.php"><i class="fa fa-home"></i> Home</a>
+    <a href="products.php"><i class="fa fa-box-open"></i> Products</a>
+    <a href="about.php"><i class="fa fa-info-circle"></i> About Us</a>
+    <a href="contact.php"><i class="fa fa-phone"></i> Contact Us</a>
+    <a href="order.php"><i class="fa fa-shopping-cart"></i> Order Now</a>
+    <a href="gallery.php"><i class="fa fa-image"></i> Gallery</a>
+    <a href="recipes.php"><i class="fa fa-utensils"></i> Recipes</a>
   </div>
-</div>
+</nav>
+<!-- ===== BANNER ===== -->
 <div class="banner-slider">
   <img src="images/banner1.jpg" id="bannerImage" alt="Banner">
   <div class="banner-overlay"></div>
-  <div class="banner-text">Taste the Purity with <span>RR Business Masale</span></div>
+  <div class="banner-text">Taste the Purity with <span>R.R. Business Masale</span></div>
 </div>
 
 <!-- ===== OUR PRODUCT CATEGORIES ===== -->
@@ -492,15 +420,15 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
       <p>All our products comply with food safety standards.</p>
     </div>
     <div class="box">
-      <img src="images/iso.png" alt="ISO" style="height:60px">
-      <h3>ISO Certified</h3>
-      <p>Processes follow global ISO 9001 quality management system.</p>
-    </div>
-    <div class="box">
-      <img src="images/organic.png" alt="Organic" style="height:60px">
-      <h3>Organic Choices</h3>
-      <p>Now offering selected organic spices on demand.</p>
-    </div>
+  <img src="images/udyam.jpg" alt="Udyam Registration" style="height:60px">
+  <h3>Udyam Registered</h3>
+  <p>Our business is officially registered under the Government of India’s Udyam Registration scheme.</p>
+</div>
+<div class="box">
+  <img src="images/trademark.png" alt="Trademark" style="height:60px">
+  <h3>Trademark Certified</h3>
+  <p>Our brand and products are protected with an official trademark registration.</p>
+</div>
   </div>
 </section>
 
@@ -583,66 +511,73 @@ footer{background:var(--brand-gradient);color:#f1f1f1;padding:40px 20px;margin-t
 </footer>
 <!-- ===== Login/SignUp ===== -->
 <script>
-  // Popup Modal Functionality
-  const modal = document.getElementById("popupForm");
-  const openPopup = document.getElementById("openPopup");
-  const closeBtn = document.getElementsByClassName("close")[0];
-  const loginForm = document.getElementById("loginForm");
-  const signupForm = document.getElementById("signupForm");
-  const switchToSignup = document.getElementById("switchToSignup");
-  const switchToLogin = document.getElementById("switchToLogin");
+const modal = document.getElementById("popupForm");
+const openPopup = document.getElementById("openPopup");
+const closeBtn = document.getElementsByClassName("close")[0];
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+const switchToSignup = document.getElementById("switchToSignup");
+const switchToLogin = document.getElementById("switchToLogin");
 
-  openPopup.onclick = () => {
-    modal.style.display = "block";
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-  };
+// Open popup
+openPopup.onclick = () => {
+  modal.style.display = "block";
+  loginForm.style.display = "block";
+  signupForm.style.display = "none";
+};
 
-  closeBtn.onclick = () => {
+// Close popup
+closeBtn.onclick = () => {
+  modal.style.display = "none";
+};
+
+// Close if clicked outside
+window.onclick = (event) => {
+  if (event.target === modal) {
     modal.style.display = "none";
-  };
-
-  window.onclick = (event) => {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  };
-
-  switchToSignup.onclick = () => {
-    loginForm.style.display = "none";
-    signupForm.style.display = "block";
-  };
-
-  switchToLogin.onclick = () => {
-    signupForm.style.display = "none";
-    loginForm.style.display = "block";
-  };
-
-  // Clock
-  function updateClock() {
-    document.getElementById('clock').textContent = new Date().toLocaleString();
   }
-  updateClock();
-  setInterval(updateClock, 1000);
+};
 
-  // Banner Slider
-  const imgs = ['images/banner1.jpg', 'images/banner2.jpg', 'images/banner3.jpg'];
-  let idx = 0;
-  setInterval(() => {
-    idx = (idx + 1) % imgs.length;
-    document.getElementById('bannerImage').src = imgs[idx];
-  }, 4000);
+// Switch login → signup
+switchToSignup.onclick = (e) => {
+  e.preventDefault(); // 👈 stop scroll
+  loginForm.style.display = "none";
+  signupForm.style.display = "block";
+};
 
-  // Navbar Toggle for Mobile
-  const navToggle = document.getElementById('navToggle');
-  const navContainer = document.querySelector('.mobile-nav-container');
-
-  navToggle.addEventListener('click', () => {
-    navContainer.classList.toggle('open');
-  });
+// Switch signup → login
+switchToLogin.onclick = (e) => {
+  e.preventDefault(); // 👈 stop scroll
+  signupForm.style.display = "none";
+  loginForm.style.display = "block";
+};
 </script>
 
+<!-- ===== JS (Clock, Banner, Navbar) ===== -->
+<script>
+// CLOCK
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleString();
+}
+updateClock();
+setInterval(updateClock, 1000);
 
+// BANNER SLIDER
+const imgs = ['images/banner1.jpg','images/banner2.jpg','images/banner3.jpg'];
+let idx = 0;
+setInterval(() => {
+  idx = (idx + 1) % imgs.length;
+  document.getElementById('bannerImage').src = imgs[idx];
+}, 4000);
+
+// NAVBAR TOGGLE
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navbar').classList.toggle('open');
+});
+
+</script>
+
+<!-- ===== CART ALERT ===== -->
 <?php if (isset($_GET['added'])): ?>
 <script>
   alert('Item Cart में जोड़ा गया!');
