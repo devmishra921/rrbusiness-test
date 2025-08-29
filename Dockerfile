@@ -1,12 +1,18 @@
 FROM php:8.1-apache
 
-# Install MySQL driver
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+# Install dependencies first
+RUN apt-get update && apt-get install -y \
+    libonig-dev \
+    libzip-dev \
+    libpng-dev \
+    default-mysql-client \
+    && docker-php-ext-install pdo pdo_mysql mysqli
 
 # Copy project files
 COPY . /var/www/html/
 
-# Apache document root set karna agar tumhara index.php kisi subfolder me ho
-# WORKDIR /var/www/html/public
+WORKDIR /var/www/html
 
 EXPOSE 80
+
+CMD ["apache2-foreground"]
