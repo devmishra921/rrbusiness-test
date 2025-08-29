@@ -1,6 +1,8 @@
-<?php 
+<?php
 session_start();
- ?>
+require 'db_connect.php';
+require 'function.php'; // 👈 ye line add karo
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,23 +117,100 @@ header img {height: 75px;}
   to { opacity: 1; transform: scale(1);}
 }
 
-/* NAVBAR */
 /* ===== NAVBAR ===== */
-nav{background:var(--brand-dark);padding:12px 14px;display:flex;align-items:center;justify-content:center;position:relative}
-nav a{color:#fff;text-decoration:none;font-weight:600;font-size:1.07rem;margin:0 20px;padding:8px 4px;transition:.25s}
-nav a:hover{color:#ffd772}
-#navToggle{display:none}
-/* burger for ≤768px */
-@media(max-width:768px){
-  #navToggle{display:block;position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;padding:6px 8px;cursor:pointer}
-  #navToggle span{display:block;width:26px;height:3px;background:#fff;margin:4px 0;transition:.3s}
-  .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--brand-dark);flex-direction:column;align-items:center;overflow:hidden;max-height:0;transition:max-height .35s}
-  nav.open .nav-links{max-height:550px;padding:12px 0}
-  nav.open #navToggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  nav.open #navToggle span:nth-child(2){opacity:0}
-  nav.open #navToggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  nav a{font-size:1.05rem;margin:6px 0}
+nav {
+  background: var(--brand-dark);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 16px;
+  padding: 10px 6px;
+  transition: .25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+nav a i {
+  font-size: 1rem;
+}
+nav a:hover { 
+  color: #ffd772; 
+  transform: translateY(-2px);
+}
+
+/* ===== TOGGLE (MOBILE ONLY) ===== */
+#navToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+#navToggle span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  transition: .3s;
+}
+
+/* ===== DESKTOP ===== */
+@media(min-width:769px){
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+}
+/* ===== MOBILE NAVBAR (FIX) ===== */
+@media(max-width:768px){
+  #navToggle {
+    display:flex;
+    background:none;
+    border:none;
+    cursor:pointer;
+    z-index:1001;
+    margin-right:10px;
+  }
+
+  /* Nav-links ko search bar ke neeche drop-down banaya */
+  .nav-links {
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    position:static;   /* ✅ FIXED: absolute ki jagah static */
+    width:100%;
+    background:var(--brand-dark);
+    overflow:hidden;
+    max-height:0;
+    padding:0;
+    transition:max-height .35s ease, padding .35s ease;
+  }
+
+  #navbar.open .nav-links {
+    max-height:500px;  /* enough space for all items */
+    padding:12px 0;
+  }
+
+  .nav-links a {
+    font-size:1rem;
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding:12px 18px;
+    margin:0;
+  }
+  .nav-links a:last-child {
+    border-bottom:none;
+  }
+}
+
     /* ===== CONTACT SECTION ===== */
     .contact-wrap {
       width: calc(100% - 80px);
@@ -264,7 +343,8 @@ nav a:hover{color:#ffd772}
   <div>
     <i class="fa fa-cart-shopping"></i> 
     <a href="order.php" style="color:#a83232;text-decoration:underline;">
-      Cart (<?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?>)
+      Cart (<?php echo getCartQty($conn); ?>)
+
     </a>
   </div>
 
@@ -309,15 +389,16 @@ nav a:hover{color:#ffd772}
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links">
-    <a href="index.php">Home</a>
-    <a href="products.php">Products</a>
-    <a href="about.php">About Us</a>
-    <a href="contact.php">Contact Us</a>
-    <a href="order.php">Order Now</a>
-    <a href="gallery.php">Gallery</a>
-    <a href="recipes.php">Recipes</a>
+    <a href="index.php"><i class="fa fa-home"></i> Home</a>
+    <a href="products.php"><i class="fa fa-box-open"></i> Products</a>
+    <a href="about.php"><i class="fa fa-info-circle"></i> About Us</a>
+    <a href="contact.php"><i class="fa fa-phone"></i> Contact Us</a>
+    <a href="order.php"><i class="fa fa-shopping-cart"></i> Order Now</a>
+    <a href="gallery.php"><i class="fa fa-image"></i> Gallery</a>
+    <a href="recipes.php"><i class="fa fa-utensils"></i> Recipes</a>
   </div>
 </nav>
+
 <h2><br>Contact Us</h2>
 <div class="contact-wrap">
   <div class="contact-form">
